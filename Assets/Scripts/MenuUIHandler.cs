@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -10,11 +11,8 @@ using UnityEditor;
 [DefaultExecutionOrder(1000)]
 public class MenuUIHandler : MonoBehaviour
 {
-    public void PlayerName()
-    {
-
-    }
-     public void StartNew()
+    
+    public void StartNew()
     {
         SceneManager.LoadScene(1);
     }
@@ -27,5 +25,12 @@ public class MenuUIHandler : MonoBehaviour
        Application.Quit();
 #endif
     }
+
+    public void SetName(string input)
+    {
+        GameManager.playerName = input;
+    }
+
+    
 
 }

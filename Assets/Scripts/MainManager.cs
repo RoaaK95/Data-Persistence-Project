@@ -9,7 +9,7 @@ public class MainManager : MonoBehaviour
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
-
+    [SerializeField] private Text PlayerInfoText;
     public Text ScoreText;
     public GameObject GameOverText;
     
@@ -17,14 +17,13 @@ public class MainManager : MonoBehaviour
     private int m_Points;
     
     private bool m_GameOver = false;
-
-    
+ 
     // Start is called before the first frame update
     void Start()
     {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
+        PlayerInfoText.text = "Best Score : " + GameManager.playerName.ToString();
         int[] pointCountArray = new [] {1,1,2,2,5,5};
         for (int i = 0; i < LineCount; ++i)
         {

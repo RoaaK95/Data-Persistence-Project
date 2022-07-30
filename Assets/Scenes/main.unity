@@ -507,6 +507,7 @@ MonoBehaviour:
   BrickPrefab: {fileID: 897975713663390409, guid: 63f25b9733d2bcd4fa2ff6de1264c739, type: 3}
   LineCount: 6
   Ball: {fileID: 177912862}
+  PlayerInfoText: {fileID: 2078529056}
   ScoreText: {fileID: 188020406}
   GameOverText: {fileID: 474497238}
 --- !u!1 &455529321

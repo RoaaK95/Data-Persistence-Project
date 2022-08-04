@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class MainManager : MonoBehaviour
 {
@@ -15,15 +18,17 @@ public class MainManager : MonoBehaviour
     
     private bool m_Started = false;
     private int m_Points;
-    
+    private int highestScore;
     private bool m_GameOver = false;
  
     // Start is called before the first frame update
     void Start()
     {
+        
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        PlayerInfoText.text = "Best Score : " + GameManager.playerName.ToString();
+        highestScore = GameManager.instance.bestScore;
+        PlayerInfoText.text = "Best Score : " + GameManager.instance.playerName +" : "+ GameManager.instance.bestScore;
         int[] pointCountArray = new [] {1,1,2,2,5,5};
         for (int i = 0; i < LineCount; ++i)
         {
@@ -35,6 +40,7 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+         
     }
 
     private void Update()
@@ -59,6 +65,13 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
+
+       if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Exit();
+        }    
+        SetHighestScore();
     }
 
     void AddPoint(int point)
@@ -71,5 +84,26 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    public void SetHighestScore()
+    {
+        GameManager.instance.bestScore = highestScore;
+        if(m_Points>highestScore)
+        {
+            highestScore = m_Points;
+        }
+         
+    }
+   
+    public void Exit()
+    {
+        GameManager.instance.SavePlayerData();
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+       Application.Quit();
+#endif
+        
     }
 }
